@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			*{padding: 0;margin: 0;}
+			html,body{height: 100%;}
+			body{display: -webkit-box;-webkit-box-orient: vertical;}
+			.header,.footer{height: 50px;width: 100%;background-color: orange;}
+			.wrapper{width: 100%;overflow: hidden;-webkit-box-flex: 1;position: relative;}
+		</style>
+	</head>
+	<body>
+		<div class="header"></div>
+		<div class="wrapper" id="wrapper">
+			<ul>
+				<li>早上好，同学</li>
+				<li>早上好，同学</li>
+				<li>早上好，同学</li>
+				<li>早上好，同学</li>
+				<li>早上好，同学</li>
+				<li>早上好，同学</li>
+				<li>早上好，同学</li>
+				<li>早上好，同学</li>
+				<li>早上好，同学</li>
+				<li>早上好，同学</li>
+				<li>早上好，同学</li>
+				<li>早上好，同学</li>
+				<li>早上好，同学</li>
+				<li>早上好，同学</li>
+				<li>早上好，同学</li>
+				<li>早上好，同学</li>
+				<li>早上好，同学</li>
+				<li>早上好，同学</li>
+				<li>早上好，同学</li>
+				<li>早上好，同学</li>
+				<li>早上好，同学</li>
+				<li>早上好，同学</li>
+				<li>早上好，同学</li>
+				<li>早上好，同学</li>
+				<li>早上好，同学</li>
+				<li>早上好，同学</li>
+				<li>早上好，同学</li>
+				<li>早上好，同学</li>
+				<li>早上好，同学</li>
+				<li>早上好，同学</li>
+				<li>早上好，同学</li>
+				<li>早上好，同学</li>
+				<li>早上好，同学</li>
+				<li>早上好，同学</li>
+				<li>早上好，同学</li>
+				<li>早上好，同学</li>
+				<li>早上好，同学</li>
+				<li>早上好，同学</li>
+				<li>早上好，同学</li>
+				<li>早上好，同学</li>
+				<li>早上好，同学</li>
+				<li>早上好，同学</li>
+			</ul>
+		</div>
+		<div class="footer"></div>
+		<script type="text/javascript" src="js/lib/iscroll-probe-min.js" ></script>
+		<!--如果我需要精准的获取当前滚动位置 我使用这个-->
+		<script type="text/javascript" src="js/lib/jquery.min.js" ></script>
+		<script type="text/javascript">
+			var scroll = new IScroll("#wrapper",{
+				mouseWheel:true,
+				scrollbars:true,
+				probeType:2
+				/*1,闲时 去获取加载滚动位置 2 滚动一段时间 获取滚动位置 3 滚动每隔1s 获取滚动位置*/
+			})
+			/*判断滚动结束时*/
+			scroll.on("scroll",function(){
+				alert("1234");
+			})
+			//beforeScrollStart 未开始滚动时
+			//scrollStart 开始滚动时
+			//scroll 内容滚动时 这个方法是probe 独有的
+			//scrollEnd 结束滚动时
+			//scrollCancel 滚动初始化完成 但并没有滚动
+			//flick 左右滑动时
+			//zoomStart 开始缩放时
+			//zoomEnd 结束缩放时
+		</script>
+	</body>
+</html>

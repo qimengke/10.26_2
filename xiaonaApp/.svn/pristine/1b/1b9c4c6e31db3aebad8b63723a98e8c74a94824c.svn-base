@@ -1,0 +1,55 @@
+var express = require('express');
+var router = express.Router();
+/*request 用于在后台连接一个路径进行访问*/
+var request = require('request');
+/*sha1 算法*/
+var sha1 = require('sha1');
+
+var config = {
+	appId:'wxc84eccfd89e392c3', //自己微信号的
+	secret:'7abcfd047bbce0009ddf157a82f1afd5',//自己微信号的密码
+	accessToken:'',//ajax
+	time:0,//Date.now（）/1000  秒级单位
+	ticket:'',//js_tikect 通过第二次ajax获取
+	noncestr:'admintest',//随意的
+	sha1:'',//算法签名
+	url:'http://xiaonaapp.duapp.com/index.html'
+}
+
+/*用于对页面提供算法签名*/
+router.get('/', function(req, res, next) {
+ /* var accessUrl = 'https://api.weixin.qq.com/cgi-bin/token?'
+  				+'grant_type=client_credential&'
+  				+'appid='+config.appId+'&'
+  				+'secret='+config.secret;*/
+
+  	var accessUrl = 'https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=wx2bb0d4596f926c48&secret=bb28db6a80d4f70fdbc7475fb684301a';
+
+  config.accessUrl = accessUrl;
+  //1.第一步 需要获取access_token
+  request(accessUrl, function (error, response, body) {
+  	  config.accessToken = JSON.parse(body).access_token;
+ 	  var js_tikect = 'https://api.weixin.qq.com/cgi-bin/ticket/getticket?'
+ 	  +'access_token='+config.accessToken
+ 	  +'&type=jsapi';
+ 	  //2.获取js_ticket
+ 	  request(js_tikect,function(error2, response2, body2) {
+ 	  	config.ticket = JSON.parse(body2).ticket;
+ 	  	//进行sha1算法
+ 	  	config.time = parseInt(Date.now()/1000);
+ 	  	//先拼接字符串
+ 	  	var str = 'jsapi_ticket='+config.ticket
+			 	  	+'&noncestr='+config.noncestr
+			 	  	+'&timestamp='+config.time
+			 	  	+'&url='+config.url;
+		//生成算法签名
+		config.sha1 = sha1(str);
+		//向前台返回一个json数据
+		console.info("获取算法签名",config);
+		res.json(config);
+		res.end();
+ 	  })
+})
+});
+
+module.exports = router;

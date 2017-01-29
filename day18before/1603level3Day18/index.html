@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+	</head>
+	<body>
+		<h2>微信二次开发</h2>
+		<p>基于微信公众平台而开发的多半是指webapp的页面开发</p>
+		<p>jsSDK 由微信团队进行开发的</p>
+		<p>和h5+硬件调用 这个jssdk和他用处相同</p>
+		<p>是作为html5和原生语言之间的衔接 将html5 转译成原生语言进行硬件的调用</p>
+		<p>区别 这个主要是做手机webapp进行使用的 接口内部调用 有微信团队进行开发不需要你去写</p>
+		<p>使用jsSDK 必须用到服务器（由安全角度考虑）</p>
+		<script type="text/javascript" src="js/jquery-1.11.0.min.js" ></script>
+		<script type="text/javascript">
+			$.ajax({
+				type:"get",
+				url:"gainian.php",
+				async:true
+			});
+		</script>
+	</body>
+</html>

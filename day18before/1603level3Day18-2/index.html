@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		
+		
+		
+		<script type="text/javascript" src="js/zepto.min.js" ></script>
+	    <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+		<script type="text/javascript">
+			$(function(){
+				//获得验证票据
+				getTicket();
+			})
+			function getTicket(){
+				$.ajax({
+					type:"get",
+					dataType:"jsonp",
+					url:"https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token=JQfgcFbJUP1nu4j5qaH5pVWw8uordA-pq0j9HEC_Uu1tMQWmC4ehPZ9jybBWekN4SXyNy0ZLScByQ7NtxTrQx6GP2vPFIJSxW1da0NnVU5IAXZgABAFCE&type=jsapi",
+					async:true,
+					success:function(data){
+						console.log(data);
+					}
+				});
+				
+				
+			}
+		</script>
+	</body>
+</html>

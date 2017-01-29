@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>测试页面</title>
+		<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/zepto.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+					//通过ajax 获取sha1算法签名
+			$.get('/wechatRouter',{
+				href:location.href.split('#')[0]
+			},function(e) {
+				//返回算法签名 进行微信初始化
+				//signature算法签名通过后台获取 使用ajax
+				wx.config({
+				    debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+				    appId: e.appId, // 必填，公众号的唯一标识
+				    timestamp:e.time , // 必填，生成签名的时间戳
+				    nonceStr: e.noncestr, // 必填，生成签名的随机串
+				    signature: e.sha1,// 必填，签名，见附录1
+				    jsApiList: ['chooseImage','openLocation'] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+				});
+			})
+		
+
+	
+		$(function() {
+			$('#photo1').click(function() {
+				wx.chooseImage({
+				    count: 1, // 默认9
+				    sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
+				    sourceType: ['camera'], // 可以指定来源是相册还是相机，默认二者都有
+				    success: function (res) {
+				        var localIds = res.localIds; // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
+				        $('#first').attr('src',localIds)
+				    }
+				});
+			})
+	
+			$('#photo2').click(function() {
+				wx.chooseImage({
+				    count: 3, // 默认9
+				    sizeType: ['original', 'compressed'], 
+				    sourceType: ['album'],
+				    success: function (res) {
+				    	//如果返回值有多个 循环操作 localIds为数组
+				    	var localIds = res.localIds;
+				    	for(var i=0;i<localIds.length;i++) {
+				    		$('#imgs').append('<img src="'+localIds[i]+'" alt="">')
+				    	}
+				    }
+				});
+			})
+
+				$('#photo3').click(function() {
+				})
+				
+				$('#showImg').click(function() {
+					// imgs 是一个数组 里面包含字符串
+					// imgs 也是一个jquery对象
+					var imgs = $('#imgList img').map(function() {
+						return $(this).attr('src')
+					});
+					imgs = imgs.toArray();
+		
+					wx.previewImage({
+					    current: imgs[0], // 当前显示图片的http链接
+					    urls: imgs // 需要预览的图片http链接列表
+					});
+				})
+		
+		
+		
+			})
+
+	</script>
+	<style>
+		*{
+			font-size: 20px;
+		}
+		img {
+			width:100px;
+			height:100px;
+		}
+	</style>
+</head>
+<body>
+	<button id='photo1'>拍照</button>
+	<button id='photo2'>选择相册</button>
+	<button id='photo3'>选择图片</button>
+	<button id='showImg'>图片预览</button>
+	<div id='imgList'>
+		<img src="http://testbpp.duapp.com/img/1.png" alt="">
+		<img src="http://testbpp.duapp.com/img/2.png" alt="">
+		<img src="http://testbpp.duapp.com/img/3.png" alt="">
+		<img src="http://testbpp.duapp.com/img/4.png" alt="">
+	</div>
+	<div>
+		<p>拍照</p>
+		<img src="" id='first' alt="">
+	</div>
+	<div>
+		<p>相册</p>
+		<div id='imgs'></div>
+	</div>
+	<div>
+		<p>选择图片</p>
+		<img src="" alt="">
+	</div>
+</body>
+</html>
